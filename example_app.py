@@ -65,7 +65,7 @@ def main():
     total_us_population = sum([s.population for s in states])
     print(f'The total US population is {total_us_population:n}.')
     # territories_only = [s for s in states if s.n_ec_votes == 0]
-    states_only = [s for s in states if s.n_ec_votes > 0]
+    states_only = [s for s in states if s.n_senate_votes > 0 and s.n_rep_votes > 0]
     total_states_only_population = sum([s.population for s in states_only])
     print(
         f'The total US population from states is {total_states_only_population:n}.'
@@ -100,6 +100,78 @@ def main():
         f'{(ca_population_largest_counties / total_us_population) * 100:.2f}%'
         ' of the US population.'
     )
+    
+    # Given the sum of the population from the  third, fourth, and fifth 
+    # most populated counties in California, how many US states have a population 
+    # less than the sum of these three counties?
 
+    # Find Sum of 3rd, 4th, and 5th most populated states
+    print("\nQuiz #1: \n")
+    ca_counties.sort(key=lambda x: x.area_sq_mi)
+    print(
+        f'The 3rd, 4th, and 5th most populated counties in CA by area is {ca_counties[-3]}, {ca_counties[-4]}, and {ca_counties[-5]}.'
+    )
+    
+    print(
+        f'The population of {ca_counties[-3]} '
+        f'is {ca_counties[-3][-2]} '
+    )
+    kern = ca_counties[-3][-2]
+    # print(kern)
+    
+    print(
+        f'The population of {ca_counties[-4]} '
+        f'is {ca_counties[-4][-2]} '
+    )
+    riverside = ca_counties[-4][-2]
+    # print(riverside)
+    
+    print(
+        f'The population of {ca_counties[-5]} '
+        f'is {ca_counties[-5][-2]} '
+    )
+    you = ca_counties[-5][-2]
+    # print(you)
+    populated_county = kern + riverside + you
+    print(f'sum = {populated_county}')
+    
+    
+    counter = 0
+    counter1 = 0
+    states_only = [s for s in states if s.n_senate_votes > 0 and s.n_rep_votes > 0]
+    # print (states_only)
+    total_states_only_population = [s.population for s in states_only]
+    print(
+        f'The total US population from states is {total_states_only_population}\n.'
+    )
+    
+    for i in total_states_only_population:
+        if (i < populated_county):
+            counter +=1
+    print(counter)
+    
+    total_states_only_population.sort()
+    # print(f'{total_states_only_population}')
+    
+    for i in total_states_only_population:
+        if (i < populated_county):
+            counter1 +=1
+    print(f'sorted \n: {counter1}')
+    
+    # print(ca_counties)
+    
+    counter2 = 0
+    ca_counties.sort(key=lambda x: x.area_sq_mi)
+    # print(states_only)
+    for i in states_only:
+        area = i.area_sq_mi
+        # print(area)
+        if (area <= 20062.0):
+            counter2 +=1
+    print(counter2)
+    
+    # #1 38
+    # #2 9
+    # #3 47
 if __name__ == '__main__':
     main()
